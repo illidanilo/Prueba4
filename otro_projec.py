@@ -3,10 +3,13 @@ import requests
 
 import conf
 
-data = {"password":"admin123!", "username":"admin"}
-cabecera = {"content-type": "application/json"}
-respuesta = requests.post("http://127.0.0.1:58000/api/v1/ticket", json.dumps(data), headers=cabecera)
-token = (respuesta.json()["response"]["serviceTicket"])
+def obtener_token(clave, usuario):
+    data = {"password":clave, "username":usuario}
+    cabecera = {"content-type": "application/json"}
+    respuesta = requests.post("http://127.0.0.1:58000/api/v1/ticket", json.dumps(data), headers=cabecera)
+    token = (respuesta.json()["response"]["serviceTicket"])
+    return token
+token = obtener_token(conf.clave, conf.usuario)
 
 
 header = {"content-type": "application/json", "X-Auth-Token": token}
